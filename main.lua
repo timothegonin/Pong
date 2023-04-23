@@ -9,10 +9,14 @@ pad.y = 0
 ball = {}
 ball.width = 20
 ball.height = 20
-ball.x = love.graphics.getWidth() / 2 - ball.width / 2
-ball.y = love.graphics.getHeight() / 2 - ball.height / 2
+ball.speed_x = 2
+ball.speed_y = 2
+
 
 function love.load()
+  --BALL position(center)
+  ball.x = love.graphics.getWidth() / 2 - ball.width / 2
+  ball.y = love.graphics.getHeight() / 2 - ball.height / 2
 end
 
 function love.update()
@@ -24,6 +28,10 @@ function love.update()
   if love.keyboard.isDown('up') and pad.y > 0 then 
     pad.y = pad.y - 2 
   end
+
+  ball.x = ball.x + ball.speed_x
+  ball.y = ball.y + ball.speed_y
+
 
 end
 
