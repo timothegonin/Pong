@@ -21,6 +21,7 @@ end
 
 function love.update()
   
+  --PAD controls and limits START
   if love.keyboard.isDown('down') and pad.y < love.graphics.getHeight() - pad.height then 
     pad.y = pad.y + 2 
   end
@@ -28,7 +29,10 @@ function love.update()
   if love.keyboard.isDown('up') and pad.y > 0 then 
     pad.y = pad.y - 2 
   end
+  --PAD controls and limits END
 
+
+  --Ball Speed and Bounce START
   ball.x = ball.x + ball.speed_x
   ball.y = ball.y + ball.speed_y
 
@@ -45,10 +49,14 @@ function love.update()
   if ball.y > love.graphics.getHeight() - ball.height then
     ball.speed_y = ball.speed_y * - 1
   end
+  --Ball Speed and Bounce END
+
 
 end
 
 function love.draw()
+  --PAD 1
   player1 = love.graphics.rectangle("fill", pad.x, pad.y, pad.width,pad.height)
+  --BALL
   theBall = love.graphics.rectangle("fill", ball.x, ball.y, ball.width, ball.height)
 end
