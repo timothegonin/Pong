@@ -52,6 +52,16 @@ function love.update()
   --Ball Speed and Bounce END
 
 
+  --Ball and Pads collision START
+  if ball.x <= pad.x + pad.width then 
+    if ball.y + ball.height > pad.y and ball.y < pad.y + pad.height
+    then
+      ball.speed_x = ball.speed_x  * -1
+      ball.x = pad.x + pad.width
+    end
+  end
+  --Ball and Pads collision END
+
 end
 
 function love.draw()
