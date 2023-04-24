@@ -32,6 +32,19 @@ function love.update()
   ball.x = ball.x + ball.speed_x
   ball.y = ball.y + ball.speed_y
 
+  if ball.x < 0 then
+    ball.speed_x = ball.speed_x * -1
+  end
+  if ball.y < 0 then 
+    ball.speed_y = ball.speed_y * -1
+  end
+
+  if ball.x > love.graphics.getWidth() - ball.width then
+    ball.speed_x = ball.speed_x * - 1
+  end
+  if ball.y > love.graphics.getHeight() - ball.height then
+    ball.speed_y = ball.speed_y * - 1
+  end
 
 end
 
