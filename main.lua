@@ -9,14 +9,19 @@ pad.y = 0
 ball = {}
 ball.width = 20
 ball.height = 20
-ball.speed_x = 2
-ball.speed_y = 2
 
+function CenterBall()
+  ball.x = love.graphics.getWidth() / 2 - ball.width / 2
+  ball.y = love.graphics.getHeight() / 2 - ball.height / 2
+
+  ball.speed_x = 2
+  ball.speed_y = 2
+end
 
 function love.load()
   --BALL position(center)
-  ball.x = love.graphics.getWidth() / 2 - ball.width / 2
-  ball.y = love.graphics.getHeight() / 2 - ball.height / 2
+  
+  CenterBall()
 end
 
 function love.update()
@@ -61,6 +66,10 @@ function love.update()
     end
   end
   --Ball and Pads collision END
+
+  if ball.x < 0 then 
+    CenterBall()
+  end
 
 end
 
