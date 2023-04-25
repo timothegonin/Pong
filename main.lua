@@ -27,15 +27,17 @@ end
 
 function love.update()
   
-  --PAD controls and limits START
-  if love.keyboard.isDown('down') and pad.y < love.graphics.getHeight() - pad.height then 
+  --PADS controls and limits START
+
+  --PADS 1(left corner, player1)
+  if love.keyboard.isDown('s') and pad.y < love.graphics.getHeight() - pad.height then 
     pad.y = pad.y + 2 
   end
 
-  if love.keyboard.isDown('up') and pad.y > 0 then 
+  if love.keyboard.isDown('z') and pad.y > 0 then 
     pad.y = pad.y - 2 
   end
-  --PAD controls and limits END
+  --PADS controls and limits END
 
 
   --Ball Speed and Bounce START
