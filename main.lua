@@ -31,20 +31,31 @@ function CenterBall()
   ball.speed_y = 3.5
 end
 
+
+--[[ 
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │ LOAD                                                                    │
+  └─────────────────────────────────────────────────────────────────────────┘
+ ]]
 function love.load()
+  --init ball to middle
   CenterBall()
   
+  --init players positions
   pad1.x = 0
   pad1.y = 0
-  
   pad2.x = love.graphics.getWidth() - pad2.width
   pad2.y = love.graphics.getHeight() - pad2.height
 end
 
-function love.update()
-  
-  --PADS controls and limits START
 
+--[[ 
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │ UPDATE                                                                  │
+  └─────────────────────────────────────────────────────────────────────────┘
+ ]]
+function love.update()
+  --PADS controls and limits START
   --PADS 1(left corner, player1)
   if love.keyboard.isDown('s') and pad1.y + pad1.height < love.graphics.getHeight()  then 
     pad1.y = pad1.y + 3.5
@@ -68,16 +79,20 @@ function love.update()
   ball.x = ball.x + ball.speed_x
   ball.y = ball.y + ball.speed_y
 
+  --player 1 LOOSE - out left
   if ball.x < 0 then
     CenterBall()
   end
-  if ball.y < 0 then 
-    ball.speed_y = ball.speed_y * -1
-  end
-
+  --player 2 LOOSE - out right
   if ball.x > love.graphics.getWidth() - ball.width then
       CenterBall()
   end
+
+  --Top bounce 
+  if ball.y < 0 then 
+    ball.speed_y = ball.speed_y * -1
+  end
+  --Bottom bounce
   if ball.y > love.graphics.getHeight() - ball.height then
     ball.speed_y = -ball.speed_y
   end
@@ -85,21 +100,30 @@ function love.update()
 
 
   --Ball and Pads collision START
+  --(player1 - ball)
   if ball.x <= pad1.x + pad1.width then 
     if ball.y + ball.height > pad1.y and ball.y < pad1.y + pad1.height then
       ball.speed_x = -ball.speed_x
       ball.x = pad1.x + pad1.width
     end
   end
-  --Ball and Pads collision END
+  --(player2 - ball)
   if ball.x + ball.width > pad2.x then
     if ball.y + ball.height > pad2.y and ball.y < pad2.y + pad2.height then
       ball.speed_x = ball.speed_x * -1
+      ball.x = pad2.x - ball.width
     end
   end
+  --Ball and Pads collision END
 
 end
 
+
+--[[ 
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │ DRAW                                                                    │
+  └─────────────────────────────────────────────────────────────────────────┘
+ ]]
 function love.draw()
   --PAD 1
   player1 = love.graphics.rectangle("fill", pad1.x, pad1.y, pad1.width,pad1.height)
