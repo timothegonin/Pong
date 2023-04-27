@@ -20,6 +20,8 @@ ball.width = 20
 ball.height = 20
 ball.speed_x = 3.5
 ball.speed_y = 3.5
+--trail
+trailList ={}
 
 --SCORE
 score_player1 = 0
@@ -57,7 +59,7 @@ end
   │ UPDATE                                                                  │
   └─────────────────────────────────────────────────────────────────────────┘
  ]]
-function love.update()
+function love.update(dt)
   --PADS controls and limits START
   --PADS 1(left corner, player1)
   if love.keyboard.isDown('s') and pad1.y + pad1.height < love.graphics.getHeight()  then 
@@ -77,6 +79,20 @@ function love.update()
   end
   --PADS controls and limits END
 
+  for index=#trailList,1,-1 do
+    local trail = trailList[index]
+    trail.duration = trail.duration - dt
+    if trail.duration <= 0 then
+      table.remove(trailList, index)
+    end
+  end 
+
+  local newBallTrail = {}
+  newBallTrail.x = ball.x
+  newBallTrail.y = ball.y
+  newBallTrail.duration = 0.35
+  table.insert(trailList,newBallTrail)
+  
 
   --Ball Speed and Bounce START
   ball.x = ball.x + ball.speed_x
@@ -94,7 +110,7 @@ function love.update()
   end
 
   --Top bounce 
-  if ball.y < 0 then 
+  if ball.y < 0 then  
     ball.speed_y = ball.speed_y * -1
   end
   --Bottom bounce
@@ -134,8 +150,16 @@ function love.draw()
   player1 = love.graphics.rectangle("fill", pad1.x, pad1.y, pad1.width,pad1.height)
   --PAD 2
   player2 = love.graphics.rectangle("fill", pad2.x, pad2.y, pad2.width, pad2.height)
+
+  --BALL TRAIL
+  for index=1,#trailList do
+    local trail = trailList[index]
+    love.graphics.setColor(1,1,1, trail.duration / 2)
+    love.graphics.rectangle("fill", trail.x, trail.y, ball.width, ball.height)
+  end
   --BALL
-  theBall = love.graphics.rectangle("fill", ball.x, ball.y, ball.width, ball.height)
+  love.graphics.setColor(1,1,1,1)
+  love.graphics.rectangle("fill", ball.x, ball.y, ball.width, ball.height)
 
   local score = score_player1.." - "..score_player2
   love.graphics.print(score, 400, 0)
