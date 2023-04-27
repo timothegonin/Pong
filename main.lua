@@ -82,6 +82,8 @@ function love.update(dt)
   for index=#trailList,1,-1 do
     local trail = trailList[index]
     trail.duration = trail.duration - dt
+    trail.x = trail.x + trail.speed_x
+    trail.y = trail.y + trail.speed_y
     if trail.duration <= 0 then
       table.remove(trailList, index)
     end
@@ -90,6 +92,8 @@ function love.update(dt)
   local newBallTrail = {}
   newBallTrail.x = ball.x
   newBallTrail.y = ball.y
+  newBallTrail.speed_x = math.random(-1,1)
+  newBallTrail.speed_y = math.random(-1,1)
   newBallTrail.duration = 0.35
   table.insert(trailList,newBallTrail)
   
@@ -154,8 +158,12 @@ function love.draw()
   --BALL TRAIL
   for index=1,#trailList do
     local trail = trailList[index]
-    love.graphics.setColor(1,1,1, trail.duration / 2)
+    --SQUARE TRAIL
+    love.graphics.setColor(1,1,1, trail.duration)
     love.graphics.rectangle("fill", trail.x, trail.y, ball.width, ball.height)
+    --BUBBLE TRAIL
+    -- love.graphics.setColor(0.5,0.5,1, trail.duration)
+    -- love.graphics.circle("line", trail.x + ball.width / 2 , trail.y + ball.height / 2, ball.height / 2)
   end
   --BALL
   love.graphics.setColor(1,1,1,1)
