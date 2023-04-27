@@ -21,6 +21,9 @@ ball.height = 20
 ball.speed_x = 3.5
 ball.speed_y = 3.5
 
+--SCORE
+score_player1 = 0
+score_player2 = 0 
 
 function CenterBall()
   --position
@@ -82,10 +85,12 @@ function love.update()
   --player 1 LOOSE - out left
   if ball.x < 0 then
     CenterBall()
+    score_player2 = score_player2 + 1 
   end
   --player 2 LOOSE - out right
   if ball.x > love.graphics.getWidth() - ball.width then
       CenterBall()
+      score_player1 = score_player1 + 1
   end
 
   --Top bounce 
@@ -131,4 +136,7 @@ function love.draw()
   player2 = love.graphics.rectangle("fill", pad2.x, pad2.y, pad2.width, pad2.height)
   --BALL
   theBall = love.graphics.rectangle("fill", ball.x, ball.y, ball.width, ball.height)
+
+  local score = score_player1.." - "..score_player2
+  love.graphics.print(score, 400, 0)
 end
