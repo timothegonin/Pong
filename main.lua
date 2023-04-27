@@ -95,6 +95,10 @@ function love.update(dt)
   newBallTrail.speed_x = math.random(-1,1)
   newBallTrail.speed_y = math.random(-1,1)
   newBallTrail.duration = 0.35
+  --(alternative colors)
+  -- newBallTrail.color_red = math.random()
+  -- newBallTrail.color_green = math.random()
+  -- newBallTrail.color_blue = math.random()
   table.insert(trailList,newBallTrail)
   
 
@@ -160,6 +164,8 @@ function love.draw()
     local trail = trailList[index]
     --SQUARE TRAIL
     love.graphics.setColor(1,1,1, trail.duration)
+    --alternative colors
+    -- love.graphics.setColor(trail.color_red,trail.color_green, trail.color_blue, trail.duration)
     love.graphics.rectangle("fill", trail.x, trail.y, ball.width, ball.height)
     --BUBBLE TRAIL
     -- love.graphics.setColor(0.5,0.5,1, trail.duration)
